@@ -1,0 +1,20 @@
+#btn_refresh_customer, .btn_icon {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+
+#refresh_icon {
+  margin-top: 9px;
+}
+
+#modal_concrete_content, #modal_reminder_content {
+  height: 80vh !important;
+}
+
+#modal_cost_content {
+  height: 50vh !important;
+}

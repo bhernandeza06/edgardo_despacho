@@ -1,0 +1,11 @@
+.picker__select--month, .picker__select--year {
+  height: 3em !important;
+}
+
+.picker__button--clear {
+  display: none;
+}
+
+.container {
+    max-width: 1296px;
+}
