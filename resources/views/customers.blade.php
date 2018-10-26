@@ -8,7 +8,21 @@
         <div class="row">
           <div class="col">
             <div class="card">
-              <div class="card-header">Listado de clientes</div>
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-md-8">
+                    Listado de clientes
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-group mb-3">
+                      <input id="rec_calendar" type="text" class="form-control" aria-describedby="basic-addon2">
+                      <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2"><i class="far fa-calendar-alt"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="card-body">
                 @if (session('status'))
                 <div class="alert alert-success" role="alert">
@@ -44,5 +58,6 @@
 
       </div>
   </div>
+  <script src="{{ asset('js/home.js') }}" defer></script>
   <script src="{{ asset('js/customer.js') }}" defer></script>
 @endsection

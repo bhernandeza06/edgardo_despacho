@@ -1,6 +1,7 @@
 var pathname = window.location.pathname;
 var parts = pathname.split('/');
 var lastSegment = parts.pop() || parts.pop();  // handle potential trailing slash
+var costs_elements = null;
 
 var Customer = {
   getData: function(query) {
@@ -68,6 +69,8 @@ $( document ).ready(function() {
     user_verification();
     verify_on_ready();
     get_current_date();
+    load_costs_graph();
+    load_costs_effectiveness()
 });
 
 function get_current_date(){
@@ -120,6 +123,7 @@ $( "#customer_input" ).keyup(function() {
 
 function verify_on_ready(){
   var customer = $( "#customer_input" ).val();
+  if (!(typeof customer === 'undefined' || !customer)) {
     if(customer.length > 2){
       Customer.getData(customer).done(function(json) {
         if(json.customers.length > 0){
@@ -130,6 +134,7 @@ function verify_on_ready(){
         }
       });
     }
+  }
 }
 
 function fill_customer(id){
@@ -158,9 +163,6 @@ $('#edit_instance_a').click(function(e){
     $(this).html('Editar');
   }
 });
-
-$('#instance_li').css('border-bottom-style', 'solid');
-$('#instance_li').addClass('active');
 
 $('#btn_refresh_customer').click(function(){
   $('#customer_input').val('');
@@ -244,7 +246,10 @@ $('#btn_save_cost').click(function(){
       $('#costs_div').empty();
       Cost.save(lastSegment, $('#cost_text').val(), $('#amount').val()).done(function(json){
         if(json.code == 200 || json.code == 201){
+          costs_elements = json.costs;
           set_body_costs(json.costs);
+          load_costs_graph();
+          load_costs_effectiveness()
         }
       });
       $('.bd-cost-modal-lg').modal('hide')
@@ -259,6 +264,7 @@ $('#btn_save_cost').click(function(){
 function load_costs(){
   Cost.get(lastSegment).done(function(json){
     if(json.code == 200 || json.code == 201){
+      costs_elements = json.costs;
       set_body_costs(json.costs);
     }
   });
@@ -281,7 +287,6 @@ $('#btn_save_doc').click(function(){
     $('#docs_div').empty();
     let link = $('#link').val().replace('https://', '');
     link = link.replace(/[/]/g, '@.@');
-    console.log(link);
     Doc.save(lastSegment, $('#title').val(), link).done(function(json){
       if(json.code == 200 || json.code == 201){
         set_body_docs(json.docs);
@@ -395,3 +400,54 @@ $('.bd-concrete-modal-lg').on('hidden.bs.modal', function (e) {
 $('.bd-reminder-modal-lg').on('hidden.bs.modal', function (e) {
   $('.picker__holder').hide();
 });
+
+function load_costs_graph(){
+  google.charts.load("current", {packages:["corechart"]});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string','Detalle');
+    data.addColumn('number', 'Costo');
+    data.addRows(costs_elements.length);
+    for (var i = 0; i < costs_elements.length; i++) {
+      data.setValue(i, 0, costs_elements[i].subject);
+      data.setValue(i, 1, costs_elements[i].amount);
+    }
+    var options = {
+      title: 'Total de gastos',
+      is3D: true,
+      backgroundColor: '#f5f8fa',
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+    chart.draw(data, options);
+  }
+}
+
+function load_costs_effectiveness(){
+  var total_fee = $('#show_contact tr').find("#fee_td").html();
+  google.charts.load("current", {packages:["corechart"]});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string','Detalle');
+    data.addColumn('number', 'Porcentaje');
+    data.addRows(2);
+    var costs = 0;
+    for (var i = 0; i < costs_elements.length; i++) {
+      costs += +costs_elements[i].amount;
+    }
+    data.setValue(0, 0, 'Honorarios');
+    data.setValue(0, 1, total_fee);
+    data.setValue(1, 0, 'Gastos');
+    data.setValue(1, 1, costs);
+    var options = {
+      title: 'Rentabilidad del caso',
+      is3D: true,
+      backgroundColor: '#f5f8fa',
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart_3d_effectiveness'));
+    chart.draw(data, options);
+  }
+}

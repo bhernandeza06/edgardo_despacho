@@ -1,18 +1,26 @@
 
-# Created by https://www.gitignore.io/api/laravel,composer
+# Created by https://www.gitignore.io/api/git,laravel
 
-### Composer ###
-composer.phar
-/vendor/
+### Git ###
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+*.orig
 
-# Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
-# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
-# composer.lock
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
 
 ### Laravel ###
 vendor/
 node_modules/
 npm-debug.log
+yarn-error.log
 
 # Laravel 4 specific
 bootstrap/compiled.php
@@ -22,13 +30,10 @@ app/storage/
 public/storage
 public/hot
 storage/*.key
-.env.*.php
-.env.php
+.env
 Homestead.yaml
 Homestead.json
-
-# Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
-.rocketeer/
+/.vagrant
 
 
-# End of https://www.gitignore.io/api/laravel,composer
+# End of https://www.gitignore.io/api/git,laravel

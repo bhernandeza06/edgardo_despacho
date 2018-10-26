@@ -45,7 +45,7 @@ class ConcreteActionController extends Controller
                         ->join('customers', 'instances.customer_id', '=', 'customers.id')
                         ->join('concrete_actions', function ($join) use ($date){
                           $join->on('instances.id', '=', 'concrete_actions.instance_id')
-                               ->where('reminder', '=', $date);
+                               ->where('reminder', '<=', $date);
                         })
                         ->get();
       return response()->json(['code' => 200, 'actions' => $actions]);

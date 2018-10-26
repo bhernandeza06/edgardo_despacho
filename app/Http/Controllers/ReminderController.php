@@ -50,6 +50,14 @@ class ReminderController extends Controller
       return response()->json(['code' => 200, 'reminders' => $reminders]);
     }
 
+    public function showAllDates(){
+      $reminders = DB::table('instances')
+                        ->join('customers', 'instances.customer_id', '=', 'customers.id')
+                        ->join('reminders', 'instances.id', '=', 'reminders.instance_id')
+                        ->get();
+      return response()->json(['code' => 200, 'reminders' => $reminders]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

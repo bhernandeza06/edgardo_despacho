@@ -11,7 +11,7 @@
               <div class="card-header">
                 <div class="row">
                   <div class="col-md-8">
-                    Listado de casos
+                    Listado de casos finalizados
                   </div>
                   <div class="col-md-4">
                     <div class="input-group mb-3">
@@ -34,7 +34,7 @@
                     <tr>
                       <th scope="col">Caso</th>
                       <th scope="col">Cliente</th>
-                      <th scope="col">Estado</th>
+                      <th scope="col">Fecha de cierre</th>
                       <th scope="col">Acciones</th>
                     </tr>
                   </thead>
@@ -43,7 +43,7 @@
                       <tr>
                         <td scope="row">{{ $key->subject }}</td>
                         <td>{{ $key->wildcard }}</td>
-                        <td style="font-weight: bold">{{ $key->state }}</td>
+                        <td style="font-weight: bold">{{ $key->updated_at }}</td>
                         <td>
                           <a href="instance/{{ $key->id }}">Ver caso</a> |
                           <a href="/customer/{{ $key->customer_id }}">Ver cliente</a>

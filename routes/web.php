@@ -33,11 +33,13 @@ Route::group(['middleware' => 'auth'], function()
   Route::get('doc/{doc_id}/destroy', 'DocumentController@destroy');
 
   Route::get('reminders_by_date/{date}/showByDate', 'ReminderController@showByDate');
+  Route::get('reminders_all_dates/showAllDates', 'ReminderController@showAllDates');
   Route::get('actions_by_date/{date}/showByDate', 'ConcreteActionController@showByDate');
 
   Route::view('/actions', 'actions');
 
   Route::resource('instance', 'InstanceController');
+  Route::resource('history', 'HistoryController');
   Route::get('instance/{query}/create_with_user', 'InstanceController@create_with_user')->middleware('auth');
 });
 

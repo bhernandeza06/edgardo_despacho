@@ -1,5 +1,7 @@
 @extends('layouts.app')
 <link href="{{ asset('css/instance.css') }}" rel="stylesheet">
+<!--Load the AJAX API-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 @section('instance')
   <div class="container">
       <div class="row justify-content-center">
@@ -28,7 +30,7 @@
                         </tr>
                         <tr>
                           <td>Honorarios: </td>
-                          <td>{{ $instance->fee }}</td>
+                          <td id="fee_td">{{ $instance->fee }}</td>
                         </tr>
                         <tr>
                           <td>Estado: </td>
@@ -218,6 +220,15 @@
                     </div>
             </div>
           </div>
+
+      </div>
+      <div class="row">
+        <div class="col-sm">
+          <div id="piechart_3d"></div>
+        </div>
+        <div class="col-sm">
+          <div id="piechart_3d_effectiveness"></div>
+        </div>
       </div>
   </div>
 

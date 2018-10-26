@@ -60,7 +60,7 @@
                         <a class="nav-link" href="/instance">Casos</a>
                       </li>
                       <li class="nav-item" id="history_li">
-                        <a class="nav-link disabled" href="#">Historial</a>
+                        <a class="nav-link" href="/history">Historial</a>
                       </li>
                     </ul>
 
